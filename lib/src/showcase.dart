@@ -330,6 +330,9 @@ class _ShowcaseState extends State<Showcase> {
                   contentPadding: widget.contentPadding,
                   disableAnimation: widget.disableAnimation,
                   animationDuration: widget.animationDuration,
+                  top: widget.top,
+                  left: widget.left,
+                  right: widget.right,
                 ),
             ],
           )
