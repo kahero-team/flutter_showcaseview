@@ -56,6 +56,7 @@ class Showcase extends StatefulWidget {
   final Duration animationDuration;
   final VoidCallback? onToolTipClick;
   final VoidCallback? onTargetClick;
+  final VoidCallback? onSkipAllClick;
   final bool? disposeOnTap;
   final bool disableAnimation;
   final EdgeInsets overlayPadding;
@@ -93,6 +94,7 @@ class Showcase extends StatefulWidget {
     this.contentPadding =
         const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
     this.onToolTipClick,
+    this.onSkipAllClick,
     this.overlayPadding = EdgeInsets.zero,
     this.blurValue,
     this.top,
@@ -134,6 +136,7 @@ class Showcase extends StatefulWidget {
     this.scrollLoadingWidget = const CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation(Colors.white)),
     this.onTargetClick,
+    this.onSkipAllClick,
     this.disposeOnTap,
     this.animationDuration = const Duration(milliseconds: 2000),
     this.disableAnimation = false,
@@ -333,6 +336,9 @@ class _ShowcaseState extends State<Showcase> {
                   top: widget.top,
                   left: widget.left,
                   right: widget.right,
+                  onSkipAllTap: () {
+                    widget.onSkipAllClick?.call();
+                  },
                 ),
             ],
           )

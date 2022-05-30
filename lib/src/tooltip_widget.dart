@@ -42,6 +42,7 @@ class ToolTipWidget extends StatefulWidget {
   final double? contentHeight;
   final double? contentWidth;
   final VoidCallback? onTooltipTap;
+  final VoidCallback? onSkipAllTap;
   final EdgeInsets? contentPadding;
   final Duration animationDuration;
   final bool disableAnimation;
@@ -49,27 +50,29 @@ class ToolTipWidget extends StatefulWidget {
   final double? left;
   final double? right;
 
-  ToolTipWidget(
-      {required this.position,
-      required this.offset,
-      required this.screenSize,
-      required this.title,
-      required this.description,
-      required this.titleTextStyle,
-      required this.descTextStyle,
-      required this.container,
-      required this.tooltipColor,
-      required this.textColor,
-      required this.showArrow,
-      required this.contentHeight,
-      required this.contentWidth,
-      required this.onTooltipTap,
-      required this.animationDuration,
-      this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
-      required this.disableAnimation,
-      this.top,
-      this.right,
-      this.left});
+  ToolTipWidget({
+    required this.position,
+    required this.offset,
+    required this.screenSize,
+    required this.title,
+    required this.description,
+    required this.titleTextStyle,
+    required this.descTextStyle,
+    required this.container,
+    required this.tooltipColor,
+    required this.textColor,
+    required this.showArrow,
+    required this.contentHeight,
+    required this.contentWidth,
+    required this.onTooltipTap,
+    required this.onSkipAllTap,
+    required this.animationDuration,
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
+    required this.disableAnimation,
+    this.top,
+    this.right,
+    this.left,
+  });
 
   @override
   _ToolTipWidgetState createState() => _ToolTipWidgetState();
@@ -360,6 +363,14 @@ class _ToolTipWidgetState extends State<ToolTipWidget>
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: paddingTop * 1.89),
+                      child: TextButton(
+                        style: TextButton.styleFrom(primary: Colors.white),
+                        onPressed: widget.onSkipAllTap,
+                        child: Text("Skip all steps"),
                       ),
                     ),
                   ],
