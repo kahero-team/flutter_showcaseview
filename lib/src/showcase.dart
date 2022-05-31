@@ -63,6 +63,7 @@ class Showcase extends StatefulWidget {
   final double? top;
   final double? left;
   final double? right;
+  final bool hideSkip;
 
   /// Defines blur value.
   /// This will blur the background while displaying showcase.
@@ -101,6 +102,7 @@ class Showcase extends StatefulWidget {
     this.left,
     this.right,
     this.radius,
+    this.hideSkip = false,
   })  : height = null,
         width = null,
         container = null,
@@ -146,6 +148,7 @@ class Showcase extends StatefulWidget {
     this.top,
     this.left,
     this.right,
+    this.hideSkip = false,
   })  : showArrow = false,
         onToolTipClick = null,
         assert(overlayOpacity >= 0.0 && overlayOpacity <= 1.0,
@@ -339,6 +342,7 @@ class _ShowcaseState extends State<Showcase> {
                   onSkipAllTap: () {
                     widget.onSkipAllClick?.call();
                   },
+                  hideSkip: widget.hideSkip,
                 ),
             ],
           )

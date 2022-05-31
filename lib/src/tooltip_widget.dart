@@ -49,6 +49,7 @@ class ToolTipWidget extends StatefulWidget {
   final double? top;
   final double? left;
   final double? right;
+  final bool hideSkip;
 
   ToolTipWidget({
     required this.position,
@@ -67,6 +68,7 @@ class ToolTipWidget extends StatefulWidget {
     required this.onTooltipTap,
     required this.onSkipAllTap,
     required this.animationDuration,
+    required this.hideSkip,
     this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
     required this.disableAnimation,
     this.top,
@@ -365,14 +367,15 @@ class _ToolTipWidgetState extends State<ToolTipWidget>
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: paddingTop * 1.89),
-                      child: TextButton(
-                        style: TextButton.styleFrom(primary: Colors.white),
-                        onPressed: widget.onSkipAllTap,
-                        child: Text("Skip all steps"),
+                    if (!widget.hideSkip)
+                      Padding(
+                        padding: EdgeInsets.only(top: paddingTop * 1.89),
+                        child: TextButton(
+                          style: TextButton.styleFrom(primary: Colors.white),
+                          onPressed: widget.onSkipAllTap,
+                          child: Text("Skip all steps"),
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
