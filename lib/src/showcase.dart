@@ -64,6 +64,7 @@ class Showcase extends StatefulWidget {
   final double? left;
   final double? right;
   final bool hideSkip;
+  final bool disableBarrierInteraction;
 
   /// Defines blur value.
   /// This will blur the background while displaying showcase.
@@ -73,37 +74,38 @@ class Showcase extends StatefulWidget {
   ///
   final double? blurValue;
 
-  const Showcase({
-    required this.key,
-    required this.child,
-    this.title,
-    required this.description,
-    this.shapeBorder,
-    this.overlayColor = Colors.black45,
-    this.overlayOpacity = 0.75,
-    this.titleTextStyle,
-    this.descTextStyle,
-    this.showcaseBackgroundColor = Colors.white,
-    this.textColor = Colors.black,
-    this.scrollLoadingWidget = const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation(Colors.white)),
-    this.showArrow = true,
-    this.onTargetClick,
-    this.disposeOnTap,
-    this.animationDuration = const Duration(milliseconds: 2000),
-    this.disableAnimation = false,
-    this.contentPadding =
-        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-    this.onToolTipClick,
-    this.onSkipAllClick,
-    this.overlayPadding = EdgeInsets.zero,
-    this.blurValue,
-    this.top,
-    this.left,
-    this.right,
-    this.radius,
-    this.hideSkip = false,
-  })  : height = null,
+  const Showcase(
+      {required this.key,
+      required this.child,
+      this.title,
+      required this.description,
+      this.shapeBorder,
+      this.overlayColor = Colors.black45,
+      this.overlayOpacity = 0.75,
+      this.titleTextStyle,
+      this.descTextStyle,
+      this.showcaseBackgroundColor = Colors.white,
+      this.textColor = Colors.black,
+      this.scrollLoadingWidget = const CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation(Colors.white)),
+      this.showArrow = true,
+      this.onTargetClick,
+      this.disposeOnTap,
+      this.animationDuration = const Duration(milliseconds: 2000),
+      this.disableAnimation = false,
+      this.contentPadding =
+          const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      this.onToolTipClick,
+      this.onSkipAllClick,
+      this.overlayPadding = EdgeInsets.zero,
+      this.blurValue,
+      this.top,
+      this.left,
+      this.right,
+      this.radius,
+      this.hideSkip = false,
+      this.disableBarrierInteraction = false})
+      : height = null,
         width = null,
         container = null,
         assert(overlayOpacity >= 0.0 && overlayOpacity <= 1.0,
@@ -149,6 +151,7 @@ class Showcase extends StatefulWidget {
     this.left,
     this.right,
     this.hideSkip = false,
+    this.disableBarrierInteraction = false,
   })  : showArrow = false,
         onToolTipClick = null,
         assert(overlayOpacity >= 0.0 && overlayOpacity <= 1.0,
@@ -276,7 +279,11 @@ class _ShowcaseState extends State<Showcase> {
         ? Stack(
             children: [
               GestureDetector(
-                onTap: _nextIfAny,
+                onTap: () {
+                  if (!widget.disableBarrierInteraction) {
+                    _nextIfAny();
+                  }
+                },
                 child: ClipPath(
                   clipper: RRectClipper(
                     area: _isScrollRunning ? Rect.zero : rectBound,
