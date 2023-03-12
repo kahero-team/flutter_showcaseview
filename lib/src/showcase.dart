@@ -57,6 +57,8 @@ class Showcase extends StatefulWidget {
   final VoidCallback? onToolTipClick;
   final VoidCallback? onTargetClick;
   final VoidCallback? onSkipAllClick;
+  final VoidCallback? onPrevClick;
+  final VoidCallback? onNextClick;
   final bool? disposeOnTap;
   final bool disableAnimation;
   final EdgeInsets overlayPadding;
@@ -65,6 +67,7 @@ class Showcase extends StatefulWidget {
   final double? right;
   final bool hideSkip;
   final bool disableBarrierInteraction;
+  final bool showPrevAndNext;
 
   /// Defines blur value.
   /// This will blur the background while displaying showcase.
@@ -104,7 +107,10 @@ class Showcase extends StatefulWidget {
       this.right,
       this.radius,
       this.hideSkip = false,
-      this.disableBarrierInteraction = false})
+      this.disableBarrierInteraction = false,
+      this.showPrevAndNext = false,
+      this.onNextClick,
+      this.onPrevClick})
       : height = null,
         width = null,
         container = null,
@@ -121,38 +127,41 @@ class Showcase extends StatefulWidget {
                 : (onTargetClick == null ? false : true),
             "onTargetClick is required if you're using disposeOnTap");
 
-  const Showcase.withWidget({
-    required this.key,
-    required this.child,
-    required this.container,
-    required this.height,
-    required this.width,
-    this.title,
-    this.description,
-    this.shapeBorder,
-    this.overlayColor = Colors.black45,
-    this.radius,
-    this.overlayOpacity = 0.75,
-    this.titleTextStyle,
-    this.descTextStyle,
-    this.showcaseBackgroundColor = Colors.white,
-    this.textColor = Colors.black,
-    this.scrollLoadingWidget = const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation(Colors.white)),
-    this.onTargetClick,
-    this.onSkipAllClick,
-    this.disposeOnTap,
-    this.animationDuration = const Duration(milliseconds: 2000),
-    this.disableAnimation = false,
-    this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
-    this.overlayPadding = EdgeInsets.zero,
-    this.blurValue,
-    this.top,
-    this.left,
-    this.right,
-    this.hideSkip = false,
-    this.disableBarrierInteraction = false,
-  })  : showArrow = false,
+  const Showcase.withWidget(
+      {required this.key,
+      required this.child,
+      required this.container,
+      required this.height,
+      required this.width,
+      this.title,
+      this.description,
+      this.shapeBorder,
+      this.overlayColor = Colors.black45,
+      this.radius,
+      this.overlayOpacity = 0.75,
+      this.titleTextStyle,
+      this.descTextStyle,
+      this.showcaseBackgroundColor = Colors.white,
+      this.textColor = Colors.black,
+      this.scrollLoadingWidget = const CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation(Colors.white)),
+      this.onTargetClick,
+      this.onSkipAllClick,
+      this.disposeOnTap,
+      this.animationDuration = const Duration(milliseconds: 2000),
+      this.disableAnimation = false,
+      this.contentPadding = const EdgeInsets.symmetric(vertical: 8),
+      this.overlayPadding = EdgeInsets.zero,
+      this.blurValue,
+      this.top,
+      this.left,
+      this.right,
+      this.hideSkip = false,
+      this.disableBarrierInteraction = false,
+      this.showPrevAndNext = false,
+      this.onNextClick,
+      this.onPrevClick})
+      : showArrow = false,
         onToolTipClick = null,
         assert(overlayOpacity >= 0.0 && overlayOpacity <= 1.0,
             "overlay opacity must be between 0 and 1.");
@@ -350,6 +359,13 @@ class _ShowcaseState extends State<Showcase> {
                     widget.onSkipAllClick?.call();
                   },
                   hideSkip: widget.hideSkip,
+                  showPrevAndNext: widget.showPrevAndNext,
+                  onNextTap: () {
+                    widget.onNextClick?.call();
+                  },
+                  onPrevTap: () {
+                    widget.onPrevClick?.call();
+                  },
                 ),
             ],
           )
